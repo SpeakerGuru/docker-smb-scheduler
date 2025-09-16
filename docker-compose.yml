@@ -18,6 +18,8 @@ services:
     container_name: smb-scheduler
     ports:
       - "8080:80"           # внешний 8080 → внутри 80
+      - "56012:56012/tcp"
+      - "56011:56011/udp"
     volumes:
       - smb-scheduler-data:/var/lib/mysql
     restart: unless-stopped
