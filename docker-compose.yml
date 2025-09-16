@@ -9,6 +9,9 @@ services:
       - "56011:56011/udp"   # SIM SERVER UDP
     volumes:
       - smb_data:/data
+      - db_data:/var/lib/mysql
     restart: unless-stopped
+
 volumes:
   smb_data:
+  db_data:
