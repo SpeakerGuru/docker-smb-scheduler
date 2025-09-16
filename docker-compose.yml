@@ -1,45 +1,24 @@
 version: "3.9"
 
-services:
-  db:
-    image: mariadb:10.6
-    container_name: smb-db
-    environment:
-      MYSQL_ALLOW_EMPTY_PASSWORD: "yes"   # инсталлятор ожидает пустой пароль root
-    volumes:
-      - db_data:/var/lib/mysql
-    restart: unless-stopped
-
-  web:
-    build: ./.docker/web
-    container_name: smb-web
-    depends_on:
-      - db
-      - sim
-    ports:
-      - "8080:80/tcp"    # как в референсе: http://<ip>:8080/
-    volumes:
-      - www:/var/www/html
-    restart: unless-stopped
-
-  sim:
-    build: ./.docker/sim
-    container_name: smb-sim
-    environment:
-      DB_HOST: db
-      DB_USER: root
-      DB_PASS: ""         # пусто
-    depends_on:
-      - db
-    ports:
-      - "56012:56012/tcp"
-      - "56011:56011/udp"
-    volumes:
-      - www:/var/www/html           # инсталлятор положит UI сюда
-      - smb_data:/data              # флаг установки и пр.
-    restart: unless-stopped
+x-logging: &default-logging
+  driver: json-file
+  options:
+    max-size: 12m
+    max-file: 5
 
 volumes:
-  db_data:
-  smb_data:
-  www:
+  smb-scheduler-data:
+
+services:
+  smb-scheduler:
+    image: vbelopolskii/smb-scheduler:latest
+    build:
+      context: .
+      dockerfile: .docker/Dockerfile
+    container_name: smb-scheduler
+    ports:
+      - "8080:80"           # внешний 8080 → внутри 80
+    volumes:
+      - smb-scheduler-data:/var/lib/mysql
+    restart: unless-stopped
+    logging: *default-logging
