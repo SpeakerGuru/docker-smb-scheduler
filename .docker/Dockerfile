@@ -1,7 +1,7 @@
 FROM mattrayner/lamp:1804-php5-base
 
 
-# Кладём инсталлятор (вы загрузите в гит именно таким именем)
+# Кладём инсталлятор 1(вы загрузите в гит именно таким именем)
 COPY .docker/smb_scheduler_install-latest.tar.gz /root/
 
 
