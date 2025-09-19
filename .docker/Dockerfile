@@ -1,4 +1,4 @@
-FROM mattrayner/lamp:1404-php5-base
+FROM mattrayner/lamp:1804-php5-base
 
 
 # Кладём инсталлятор (вы загрузите в гит именно таким именем)
