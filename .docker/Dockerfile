@@ -1,4 +1,4 @@
-FROM lamp:latest-1804
+FROM mattrayner/lamp:latest-1804
 
 # Кладём инсталлятор 1(вы загрузите в гит именно таким именем)
 COPY .docker/smb_scheduler_install-latest.tar.gz /root/
